@@ -11,6 +11,12 @@ services:
   backend:
     build: ./backend
     restart: always
+    command:
+      sh -c 'python3 manage.py migrate &&
+      python3 manage.py collectstatic --no-input &&
+      gunicorn it_events.wsgi:application --bind 0:8000'
+    ports:
+      - "8000:8000"
     volumes:
       - static_value:/app/backend_static/
       - media_value:/app/media/
@@ -37,7 +43,7 @@ services:
   #    - static_value:/var/html/backend_static/
   #    - media_value:/var/html/media/
   #  depends_on:
-  #    - frontend'
+  #    - frontend
 
 volumes:
   static_value:
