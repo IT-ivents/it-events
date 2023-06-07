@@ -1,8 +1,8 @@
 [submodule "backend"]
 	path = backend
 	url = git@github.com:IT-ivents/IT-ivents-backend.git
-	branch = develop
+	branch = dev
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:IT-ivents/it-events-frontend.git
-    branch = develop
+        branch = develop
