@@ -46,6 +46,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/it_events_backend:v1.0.first
           context: ./backend/it_events/
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/it_events_backend:v1.0.first
+          cache-to: type=inline
 
       - name: Push Frontend to Docker Hub
         uses: docker/build-push-action@v2
@@ -53,6 +55,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/it_events_frontend:v1.0.first
           context: ./frontend/
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/it_events_frontend:v1.0.first
+          cache-to: type=inline
   deploy:
 
      runs-on: ubuntu-22.04
@@ -74,19 +78,19 @@ jobs:
            sudo docker compose rm backend
            sudo docker compose pull frontend
            sudo docker compose rm frontend
-
+           rm .env
            touch .env
-           echo DEBUG=${{ secrets.DEBUG }} > .env     
-           echo SECRET_KEY=${{ secrets.SECRET_KEY }} > .env
-           echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} > .env
-           echo CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }} > .env
-           echo CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_TRUSTED_ORIGINS }} > .env
+           echo DEBUG=${{ secrets.DEBUG }} >> .env     
+           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+           echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
+           echo CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }} >> .env
+           echo CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_TRUSTED_ORIGINS }} >> .env
 
-           echo DB_HOST=${{ secrets.DB_HOST }} > .env
-           echo DB_NAME=${{ secrets.DB_NAME }} > .env
-           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} > .env
-           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} > .env
-           echo DB_PORT=${{ secrets.DB_PORT }} > .env
+           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
 
            sudo docker compose up -d
            sudo docker system prune -f
