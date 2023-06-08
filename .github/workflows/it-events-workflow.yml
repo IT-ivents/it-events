@@ -72,7 +72,8 @@ jobs:
            echo ok!
            echo ok!
            pwd
-#          sudo docker compose stop
+           sudo docker compose stop
+           echo ok!
 #          sudo docker compose pull backend
 #          sudo docker compose rm backend
 #
