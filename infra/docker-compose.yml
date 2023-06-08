@@ -10,7 +10,7 @@ services:
       - ../backend/.env
 
   backend:
-    build: ../backend/it_events
+    image: asterrus/it_events_backend:v1.0.first
     restart: always
     depends_on:
       - db
@@ -21,7 +21,7 @@ services:
       - ../backend/.env
 
   frontend:
-    build: ../frontend
+    image: asterrus/it_events_frontend:v1.0.first
     depends_on:
       - backend
     volumes:

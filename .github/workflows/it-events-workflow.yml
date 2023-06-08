@@ -73,6 +73,10 @@ jobs:
            echo ok!
            pwd
            sudo docker compose stop
+           sudo docker compose pull backend
+           sudo docker compose rm backend
+           sudo docker compose frontend backend
+           sudo docker compose rm frontend
            echo ok!
 
            touch .env
@@ -88,8 +92,8 @@ jobs:
            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
 
-#          sudo docker compose up -d
-#          sudo docker system prune -f
-#          sudo docker compose exec backend python manage.py migrate
-#          sudo docker compose exec backend python manage.py collectstatic --no-input
-#          sudo docker compose exec backend python manage.py loaddata data.json
+           sudo docker compose up -d
+           sudo docker system prune -f
+#           sudo docker compose exec backend python manage.py migrate
+#           sudo docker compose exec backend python manage.py collectstatic --no-input
+#           sudo docker compose exec backend python manage.py loaddata data.json
