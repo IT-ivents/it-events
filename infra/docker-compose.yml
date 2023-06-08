@@ -6,7 +6,7 @@ services:
     image: postgres:13.0-alpine
     restart: always
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "username", '-d', 'default_database' ]
+      test: [ "CMD", "pg_isready", "-U", "postgres", '-d', 'postgres' ]
       interval: 5s
       retries: 5
     volumes:
