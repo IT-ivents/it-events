@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Backend to Docker Hub
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/it_events_backend:v1.0.first
@@ -71,6 +71,7 @@ jobs:
            echo ok!
            echo ok!
            echo ok!
+           pwd
 #          sudo docker compose stop
 #          sudo docker compose pull backend
 #          sudo docker compose rm backend
