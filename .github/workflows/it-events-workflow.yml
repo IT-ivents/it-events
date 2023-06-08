@@ -3,14 +3,12 @@ name: CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  build:
+  check_repositories:
     runs-on: ubuntu-22.04
 
     steps:
@@ -20,9 +18,33 @@ jobs:
           submodules: recursive
 
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo Backend and Frontend is ok!
 
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+  build_and_push_to_docker_hub:
+
+    name: Push Docker Backend and Frontend images to Docker Hub
+    runs-on: ubuntu-22.04
+    needs: check_repositories
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Backend to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/it_events_backend:v1.0.first
+          context: ./backend/it_events/
+
+      - name: Push Frontend to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/it_events_frontend:v1.0.first
+          context: ./frontend/
