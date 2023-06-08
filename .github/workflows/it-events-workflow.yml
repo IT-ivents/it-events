@@ -63,10 +63,10 @@ jobs:
        uses: appleboy/ssh-action@master
        with:
          host: ${{ secrets.YANDEX_HOST }}
+         passphrase: ${{ secrets.SSH_PASSPHRASE }} # Если ваш ssh-ключ защищён паролем
          username: ${{ secrets.YANDEX_LOGIN }}
          password: ${{ secrets.YANDEX_PASSWORD }}
          key: ${{ secrets.SSH_KEY }}
-         passphrase: ${{ secrets.SSH_PASSPHRASE }} # Если ваш ssh-ключ защищён паролем
          script: |
            echo ok!
            echo ok!
