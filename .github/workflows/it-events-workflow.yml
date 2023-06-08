@@ -75,6 +75,7 @@ jobs:
            sudo docker compose pull frontend
            sudo docker compose rm frontend
 
+           rm .env
            touch .env
            echo DEBUG=${{ secrets.DEBUG }} >> .env     
            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
