@@ -7,7 +7,7 @@ services:
     volumes:
       - db_value:/var/lib/postgresql/data/
     env_file:
-      - ../backend/.env
+      - ./.env
 
   backend:
     image: asterrus/it_events_backend:v1.0.first
@@ -18,7 +18,7 @@ services:
       - static_value:/app/backend_static/
       - media_value:/app/media/
     env_file:
-      - ../backend/.env
+      - ./.env
 
   frontend:
     image: asterrus/it_events_frontend:v1.0.first
