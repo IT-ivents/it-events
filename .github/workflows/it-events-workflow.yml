@@ -74,8 +74,7 @@ jobs:
            pwd
            sudo docker compose stop
            echo ok!
-#          sudo docker compose pull backend
-#          sudo docker compose rm backend
+
            touch .env
            echo DEBUG=${{ secrets.DEBUG }} >> .env     
            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
