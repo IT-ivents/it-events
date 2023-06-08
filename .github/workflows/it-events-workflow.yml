@@ -75,7 +75,6 @@ jobs:
            sudo docker compose pull frontend
            sudo docker compose rm frontend
 
-           rm .env
            touch .env
            echo DEBUG=${{ secrets.DEBUG }} >> .env     
            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
@@ -91,6 +90,6 @@ jobs:
 
            sudo docker compose up -d
            sudo docker system prune -f
-#           sudo docker compose exec backend python manage.py migrate
-#           sudo docker compose exec backend python manage.py collectstatic --no-input
-#           sudo docker compose exec backend python manage.py loaddata data.json
+           sudo docker compose exec backend python manage.py migrate
+           sudo docker compose exec backend python manage.py collectstatic --no-input
+           sudo docker compose exec backend python manage.py loaddata data/data.json
