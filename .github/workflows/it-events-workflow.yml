@@ -53,3 +53,44 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/it_events_frontend:v1.0.first
           context: ./frontend/
+  deploy:
+
+     runs-on: ubuntu-22.04
+     needs: build_and_push_to_docker_hub
+     steps:
+
+     - name: executing remote ssh commands to deploy
+       uses: appleboy/ssh-action@master
+       with:
+         host: ${{ secrets.YANDEX_HOST }}
+         username: ${{ secrets.YANDEX_LOGIN }}
+         password: ${{ secrets.YANDEX_PASSWORD }}
+         key: ${{ secrets.SSH_KEY }}
+         passphrase: ${{ secrets.SSH_PASSPHRASE }} # Если ваш ssh-ключ защищён паролем
+         script: |
+           echo ok!
+           echo ok!
+           echo ok!
+#          sudo docker compose stop
+#          sudo docker compose pull backend
+#          sudo docker compose rm backend
+#
+#          touch .env
+#          echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
+#          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+#          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+#          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+#          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+#          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+#          echo TIME_ZONE=${{ secrets.TIME_ZONE }} >> .env
+#          echo USE_TZ=${{ secrets.USE_TZ }} >> .env
+#          echo DEBUG=${{ secrets.DEBUG }} >> .env
+#          echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
+#          echo CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }} >> .env
+#          echo CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_TRUSTED_ORIGINS }} >> .env
+#          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+#          sudo docker compose up -d
+#          sudo docker system prune -f
+#          sudo docker compose exec backend python manage.py migrate
+#          sudo docker compose exec backend python manage.py collectstatic --no-input
+#          sudo docker compose exec backend python manage.py loaddata data.json
