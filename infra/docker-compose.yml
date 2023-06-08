@@ -4,6 +4,11 @@ services:
 
   db:
     image: postgres:13.0-alpine
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "username", '-d', 'default_database' ]
+      interval: 5s
+      retries: 5
     volumes:
       - db_value:/var/lib/postgresql/data/
     env_file:
@@ -38,7 +43,7 @@ services:
       - media_value:/var/html/media/
     depends_on:
       - frontend
-
+      - backend
 volumes:
   static_value:
   media_value:
