@@ -36,6 +36,29 @@ services:
     volumes:
       - front_value:/app/result_build/
 
+  nginx:
+      image: nginx:1.19.3
+      ports:
+        - "80:80"
+        - "443:443"
+      restart: always
+      volumes:
+        - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        - ./certbot/www:/var/www/certbot/
+        - ./certbot/conf/:/etc/nginx/ssl/
+        - ./web-root:/var/www
+        - front_value:/usr/share/nginx/html/
+        - static_value:/var/html/backend_static/
+        - media_value:/var/html/media/
+      depends_on:
+        - frontend
+        - backend
+
+  certbot:
+    image: certbot/cerbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/
+      - ./certbot/conf/:/etc/letsencrypt/
   
 volumes:
   static_value:
